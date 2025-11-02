@@ -1,0 +1,17 @@
+[
+  {
+    "instruction": "请实现GridView的editRow方法",
+    "input": "编辑某行记录",
+    "output": "```js\n\t\t/**\n\t\t * 编辑某行记录\n\t\t * @method editRow\n\t\t * @param {String} rowid 行id\n\t\t * @param {Object} [option] 参数对象,内置'oper=edit'用来区分操作行为\n\t\t */\n\t\teditRow: function (rowid, o) {\n\t\t\tthis.getGrid().grid('editRow',rowid, o);\n\t\t},\n\t\t```"
+  },
+  {
+    "instruction": "解释GridView中editRow方法的作用",
+    "input": "",
+    "output": "- 编辑某行记录。"
+  },
+  {
+    "instruction": "editRow方法的参数有哪些？",
+    "input": "",
+    "output": "| 参数 | 类型 | 描述 |\n|------|------|------|\n| rowid | String | 行id |\n| option | Object | 参数对象,内置'oper=edit'用来区分操作行为 |"
+  }
+]
