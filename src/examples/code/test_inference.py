@@ -1,5 +1,6 @@
 # from modelscope import snapshot_download
 import os
+import torch
 
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
@@ -12,9 +13,6 @@ def print_gpu_memory(prefix=""):
         print(f"总预留: {torch.cuda.memory_reserved() / 1024 ** 3:.2f}")
     else:
         print("\n当前没有检测到 GPU！")
-
-
-import torch
 
 
 def generate_response(model, tokenizer, instruction="", input_text="", max_new_tokens=1024):

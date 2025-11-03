@@ -23,7 +23,7 @@ from transformers.trainer_utils import SaveStrategy
 # ==================== 1、定义变量 ====================
 current_dir = os.path.dirname(os.path.abspath(__file__))
 data_path = os.path.join(current_dir, "../../datas/code_alpaca.json")
-output_dir = os.path.abspath(os.path.join(current_dir, "./output/qwen2.5-7b-qlora"))
+output_dir = os.path.abspath(os.path.join(current_dir, "./output/qwen2.5-7b-qlora-2"))
 os.makedirs(output_dir, exist_ok=True)
 
 assert os.path.exists(data_path), f"数据文件不存在：{data_path}"
@@ -54,7 +54,7 @@ tokenizer.padding_side = "right"
 lora_config = LoraConfig(
     r=16,
     lora_alpha=32,
-    target_modules=["q_proj", "v_proj", "k_proj", "o_proj"],
+    target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "up_proj", "down_proj", "gate_proj"],
     lora_dropout=0.05,
     bias="none",
     task_type="CAUSAL_LM",
@@ -134,22 +134,19 @@ training_args = TrainingArguments(
     gradient_accumulation_steps=8,
     warmup_steps=50,
     num_train_epochs=3,
-    learning_rate=5e-5,
+    learning_rate=2e-5,
     weight_decay=0.01,
-    max_grad_norm=0.3,
     fp16=True,
-
-    # 🔧 修正：使用 `evaluation_strategy`（新版API）
     eval_strategy=IntervalStrategy.STEPS,
-    eval_steps=90,
+    eval_steps=80,
     save_strategy=SaveStrategy.STEPS,
-    save_steps=90,
+    save_steps=80,
     save_total_limit=3,
     load_best_model_at_end=True,
     metric_for_best_model="eval_loss",
     greater_is_better=False,
 
-    logging_steps=30,
+    logging_steps=50,
     report_to="none",
     prediction_loss_only=True,
 )
